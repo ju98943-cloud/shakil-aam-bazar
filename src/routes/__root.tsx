@@ -31,9 +31,13 @@ export const Route = createRootRoute({
       { title: "Shakil AAM Bazar — খাঁটি রাজশাহীর আম" },
       { name: "description", content: "সরাসরি বাগান থেকে আপনার ঘরে। ফরমালিন মুক্ত হিমসাগর, ল্যাংড়া, আম্রপালি ও ফজলি আম।" },
       { property: "og:title", content: "Shakil AAM Bazar — খাঁটি রাজশাহীর আম" },
-      { property: "og:description", content: "ফরমালিন মুক্ত প্রিমিয়াম আম। ক্যাশ অন ডেলিভারি।" },
+      { property: "og:description", content: "সরাসরি বাগান থেকে আপনার ঘরে। ফরমালিন মুক্ত হিমসাগর, ল্যাংড়া, আম্রপালি ও ফজলি আম।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Shakil AAM Bazar — খাঁটি রাজশাহীর আম" },
+      { name: "twitter:description", content: "সরাসরি বাগান থেকে আপনার ঘরে। ফরমালিন মুক্ত হিমসাগর, ল্যাংড়া, আম্রপালি ও ফজলি আম।" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/befb377c-e1b1-494b-b859-6f166dbfea17/id-preview-0c5faf82--b0120f51-0fc6-4ee6-84b8-5840fd1c6910.lovable.app-1777528864081.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/befb377c-e1b1-494b-b859-6f166dbfea17/id-preview-0c5faf82--b0120f51-0fc6-4ee6-84b8-5840fd1c6910.lovable.app-1777528864081.png" },
     ],
     links: [
       {
