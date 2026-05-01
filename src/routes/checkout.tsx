@@ -56,7 +56,7 @@ function CheckoutPage() {
 
       cart.clear();
       toast.success("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
-      navigate({ to: "/order-success", search: {} });
+      navigate({ to: "/order-success", search: { o: undefined } });
     } catch (err: any) {
       toast.error("অর্ডার দিতে ব্যর্থ: " + (err.message || "অজানা সমস্যা"));
     } finally { setSubmitting(false); }
