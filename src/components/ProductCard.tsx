@@ -3,23 +3,13 @@ import { ShoppingBag } from "lucide-react";
 import { cart, type CartItem } from "@/lib/cart";
 import { bdt } from "@/lib/format";
 import { toast } from "sonner";
-
-type Product = {
-  id: string;
-  slug: string;
-  name: string;
-  description: string | null;
-  price: number;
-  original_price: number | null;
-  image_url: string | null;
-  weight: string | null;
-};
+import type { Product } from "@/lib/products";
 
 export function ProductCard({ product }: { product: Product }) {
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     const item: Omit<CartItem, "quantity"> = {
-      id: product.id, name: product.name, price: Number(product.price),
+      id: product.id, name: product.name, price: product.price,
       image_url: product.image_url, weight: product.weight,
     };
     cart.add(item, 1);
@@ -38,18 +28,16 @@ export function ProductCard({ product }: { product: Product }) {
               -{discount}%
             </div>
           )}
-          {product.image_url && (
-            <img src={product.image_url} alt={product.name} loading="lazy" width={800} height={800}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-          )}
+          <img src={product.image_url} alt={product.name} loading="lazy" width={800} height={800}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
         </div>
         <div className="p-5">
           <h3 className="text-lg font-bold text-foreground">{product.name}</h3>
           {product.weight && <p className="mt-1 text-xs text-muted-foreground">{product.weight}</p>}
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-xl font-bold text-primary">{bdt(Number(product.price))}</span>
+            <span className="text-xl font-bold text-primary">{bdt(product.price)}</span>
             {product.original_price && product.original_price > product.price && (
-              <span className="text-sm text-muted-foreground line-through">{bdt(Number(product.original_price))}</span>
+              <span className="text-sm text-muted-foreground line-through">{bdt(product.original_price)}</span>
             )}
           </div>
           <button onClick={handleAdd}

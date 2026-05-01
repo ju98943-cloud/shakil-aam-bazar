@@ -1,8 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { Minus, Plus, ShoppingBag, ArrowLeft, Leaf, Truck, ShieldCheck } from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { getProductBySlug } from "@/lib/products";
 import { cart } from "@/lib/cart";
 import { bdt, toBn } from "@/lib/format";
 import { toast } from "sonner";
@@ -16,20 +15,12 @@ function ProductDetail() {
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
 
-  const { data: product, isLoading } = useQuery({
-    queryKey: ["product", slug],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("products").select("*").eq("slug", slug).maybeSingle();
-      if (error) throw error;
-      return data;
-    },
-  });
+  const product = getProductBySlug(slug);
 
-  if (isLoading) return <div className="mx-auto max-w-7xl px-4 py-20 text-center text-muted-foreground">লোড হচ্ছে...</div>;
   if (!product) return <div className="mx-auto max-w-7xl px-4 py-20 text-center"><h1 className="text-2xl font-bold">পণ্য পাওয়া যায়নি</h1><Link to="/shop" className="mt-4 inline-block text-primary underline">শপে ফিরে যান</Link></div>;
 
   const handleAdd = () => {
-    cart.add({ id: product.id, name: product.name, price: Number(product.price), image_url: product.image_url, weight: product.weight }, qty);
+    cart.add({ id: product.id, name: product.name, price: product.price, image_url: product.image_url, weight: product.weight }, qty);
     toast.success(`${toBn(qty)} টি ${product.name} কার্টে যোগ হয়েছে`);
   };
   const handleBuy = () => { handleAdd(); navigate({ to: "/checkout" }); };
@@ -47,12 +38,12 @@ function ProductDetail() {
           <h1 className="text-3xl font-bold text-foreground md:text-4xl">{product.name}</h1>
           {product.weight && <p className="mt-2 text-sm text-muted-foreground">প্যাকেজ: {product.weight}</p>}
           <div className="mt-5 flex items-baseline gap-3">
-            <span className="text-4xl font-bold text-primary">{bdt(Number(product.price))}</span>
-            {product.original_price && Number(product.original_price) > Number(product.price) && (
-              <span className="text-lg text-muted-foreground line-through">{bdt(Number(product.original_price))}</span>
+            <span className="text-4xl font-bold text-primary">{bdt(product.price)}</span>
+            {product.original_price && product.original_price > product.price && (
+              <span className="text-lg text-muted-foreground line-through">{bdt(product.original_price)}</span>
             )}
           </div>
-          {product.description && <p className="mt-5 leading-relaxed text-foreground/80">{product.description}</p>}
+          <p className="mt-5 leading-relaxed text-foreground/80">{product.description}</p>
 
           <div className="mt-7 flex items-center gap-4">
             <span className="text-sm font-semibold">পরিমাণ:</span>
