@@ -2,12 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/order-success")({
-  validateSearch: (s: Record<string, unknown>) => ({ o: (s.o as string | undefined) }),
   component: SuccessPage,
 });
 
 function SuccessPage() {
-  const { o } = Route.useSearch();
   return (
     <div className="mx-auto max-w-xl px-4 py-20 text-center">
       <CheckCircle2 className="mx-auto h-20 w-20 text-primary" />
