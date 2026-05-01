@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { cart, useCart, useCartHydrated } from "@/lib/cart";
 import { bdt } from "@/lib/format";
 import { toast } from "sonner";
@@ -35,21 +34,29 @@ function CheckoutPage() {
     }
     setSubmitting(true);
     try {
-      const { data: order, error } = await supabase.from("orders").insert({
-        customer_name: form.name, customer_phone: form.phone, customer_address: form.address,
-        district: form.district, notes: form.notes || null,
-        subtotal, shipping_fee: shipping, total,
-      }).select("id, order_number").single();
-      if (error) throw error;
+      const orderDetails = items.map((it) => `${it.name} × ${it.quantity} = ৳${it.price * it.quantity}`).join("\n");
+      const body = {
+        name: form.name,
+        phone: form.phone,
+        address: form.address,
+        district: form.district,
+        notes: form.notes || "N/A",
+        order_items: orderDetails,
+        subtotal: `৳${subtotal}`,
+        shipping: `৳${shipping}`,
+        total: `৳${total}`,
+      };
 
-      const { error: itemsError } = await supabase.from("order_items").insert(
-        items.map((it) => ({ order_id: order.id, product_id: it.id, product_name: it.name, unit_price: it.price, quantity: it.quantity }))
-      );
-      if (itemsError) throw itemsError;
+      const res = await fetch("https://formspree.io/f/movdjjkj", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error("ফর্ম জমা দিতে ব্যর্থ");
 
       cart.clear();
       toast.success("অর্ডার সফলভাবে গ্রহণ করা হয়েছে!");
-      navigate({ to: "/order-success", search: { o: order.order_number } });
+      navigate({ to: "/order-success" });
     } catch (err: any) {
       toast.error("অর্ডার দিতে ব্যর্থ: " + (err.message || "অজানা সমস্যা"));
     } finally { setSubmitting(false); }
