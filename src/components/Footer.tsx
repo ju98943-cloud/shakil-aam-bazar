@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 
 export function Footer() {
   return (
@@ -7,7 +8,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4 md:px-8">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-foreground font-bold">শ</div>
+            <img src={logoImg} alt="Shakil AAM Bazar" width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" />
             <div>
               <div className="font-bold">Shakil AAM Bazar</div>
               <div className="text-[10px] uppercase tracking-widest opacity-70">খাঁটি রাজশাহীর আম</div>

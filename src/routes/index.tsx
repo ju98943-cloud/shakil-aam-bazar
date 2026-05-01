@@ -1,9 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Truck, Leaf, ShieldCheck, Phone } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/ProductCard";
+import { products } from "@/lib/products";
 import heroImg from "@/assets/hero-mangoes.jpg";
 
 export const Route = createFileRoute("/")({
@@ -17,15 +16,6 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { data: products } = useQuery({
-    queryKey: ["products", "featured"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("products").select("*").eq("is_active", true).order("sort_order");
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
-
   return (
     <div>
       {/* HERO */}
@@ -91,7 +81,7 @@ function HomePage() {
           <Link to="/shop" className="hidden text-sm font-semibold text-primary hover:underline md:inline">সব দেখুন →</Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products?.map((p) => <ProductCard key={p.id} product={p} />)}
+          {products.map((p) => <ProductCard key={p.id} product={p} />)}
         </div>
       </section>
 
