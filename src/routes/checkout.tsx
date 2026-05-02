@@ -5,7 +5,7 @@ import { bdt } from "@/lib/format";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/checkout")({
-  head: () => ({ meta: [{ title: "চেকআউট | Shakil AAM Bazar" }] }),
+  head: () => ({ meta: [{ title: "চেকআউট | Mangooz" }] }),
   component: CheckoutPage,
 });
 

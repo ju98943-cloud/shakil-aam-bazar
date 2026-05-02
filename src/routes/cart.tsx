@@ -4,7 +4,7 @@ import { cart, useCart, useCartHydrated } from "@/lib/cart";
 import { bdt, toBn } from "@/lib/format";
 
 export const Route = createFileRoute("/cart")({
-  head: () => ({ meta: [{ title: "কার্ট | Shakil AAM Bazar" }] }),
+  head: () => ({ meta: [{ title: "কার্ট | Mangooz" }] }),
   component: CartPage,
 });
 

@@ -5,7 +5,7 @@ import { products } from "@/lib/products";
 export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
-      { title: "শপ — সব আম | Shakil AAM Bazar" },
+      { title: "শপ — সব আম | Mangooz" },
       { name: "description", content: "হিমসাগর, ল্যাংড়া, আম্রপালি, ফজলি — সকল জাতের খাঁটি আম এক জায়গায়।" },
     ],
   }),

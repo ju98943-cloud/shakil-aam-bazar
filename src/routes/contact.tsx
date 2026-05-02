@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({ meta: [{ title: "যোগাযোগ | Shakil AAM Bazar" }] }),
+  head: () => ({ meta: [{ title: "যোগাযোগ | Mangooz" }] }),
   component: ContactPage,
 });
 
@@ -10,7 +10,7 @@ function ContactPage() {
   const items = [
     { icon: Phone, t: "ফোন / কল", v: "০১৭০০-০০০০০০", href: "tel:01700000000" },
     { icon: MessageCircle, t: "হোয়াটসঅ্যাপ", v: "০১৭০০-০০০০০০", href: "https://wa.me/8801700000000" },
-    { icon: Mail, t: "ইমেইল", v: "info@shakilaambazar.com", href: "mailto:info@shakilaambazar.com" },
+    { icon: Mail, t: "ইমেইল", v: "info@mangooz.com", href: "mailto:info@mangooz.com" },
     { icon: MapPin, t: "ঠিকানা", v: "রাজশাহী, বাংলাদেশ" },
   ];
   return (
