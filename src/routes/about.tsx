@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Leaf, Heart, Award } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({ meta: [{ title: "আমাদের সম্পর্কে | Shakil AAM Bazar" }, { name: "description", content: "Shakil AAM Bazar — রাজশাহী থেকে সরাসরি আম সরবরাহকারী।" }] }),
+  head: () => ({ meta: [{ title: "আমাদের সম্পর্কে | Mangooz" }, { name: "description", content: "Mangooz — রাজশাহী থেকে সরাসরি আম সরবরাহকারী।" }] }),
   component: AboutPage,
 });
 
@@ -14,7 +14,7 @@ function AboutPage() {
         <h1 className="mt-2 text-4xl font-bold md:text-5xl">আমাদের সম্পর্কে</h1>
       </div>
       <p className="mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-foreground/80">
-        Shakil AAM Bazar প্রতিষ্ঠিত হয়েছে একটি সহজ স্বপ্ন নিয়ে — বাংলাদেশের প্রতিটি ঘরে পৌঁছে দেওয়া রাজশাহীর খাঁটি, ফরমালিন মুক্ত ও প্রকৃতির আশীর্বাদে পরিপূর্ণ আম।
+        Mangooz প্রতিষ্ঠিত হয়েছে একটি সহজ স্বপ্ন নিয়ে — বাংলাদেশের প্রতিটি ঘরে পৌঁছে দেওয়া রাজশাহীর খাঁটি, ফরমালিন মুক্ত ও প্রকৃতির আশীর্বাদে পরিপূর্ণ আম।
       </p>
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         {[

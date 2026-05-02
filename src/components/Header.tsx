@@ -23,9 +23,9 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logoImg} alt="Shakil AAM Bazar" width={40} height={40} className="h-10 w-10 object-contain" />
+          <img src={logoImg} alt="Mangooz" width={40} height={40} className="h-10 w-10 object-contain" />
           <div className="leading-tight">
-            <div className="text-base font-bold text-foreground">Shakil AAM Bazar</div>
+            <div className="text-base font-bold text-foreground">Mangooz</div>
             <div className="text-[10px] uppercase tracking-widest text-muted-foreground">খাঁটি রাজশাহীর আম</div>
           </div>
         </Link>

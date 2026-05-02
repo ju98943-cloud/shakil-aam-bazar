@@ -8,7 +8,7 @@ import heroImg from "@/assets/hero-mangoes.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Shakil AAM Bazar — খাঁটি রাজশাহীর আম ঘরে বসে অর্ডার করুন" },
+      { title: "Mangooz — খাঁটি রাজশাহীর আম ঘরে বসে অর্ডার করুন" },
       { name: "description", content: "ফরমালিন মুক্ত হিমসাগর, ল্যাংড়া, আম্রপালি, ফজলি আম। সারা বাংলাদেশে হোম ডেলিভারি, ক্যাশ অন ডেলিভারি।" },
     ],
   }),
