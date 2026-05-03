@@ -15,15 +15,14 @@ const BKASH_NUMBER = "01325444569";
 const WEB3FORMS_KEY = "0076fad7-789a-4476-b990-7a2cdef178dd";
 const KG_PER_BOX = 6;
 
-type Zone = "dhaka" | "district" | "upazila";
+type Zone = "dhaka" | "outside";
 type DType = "point" | "home";
 type PayChoice = "delivery_only" | "full";
 
 // rate per kg: [under20, over20]
 const RATES: Record<Zone, Record<DType, [number, number]>> = {
   dhaka:    { point: [13, 12], home: [22, 20] },
-  district: { point: [16, 16], home: [24, 22] },
-  upazila:  { point: [18, 16], home: [26, 24] },
+  outside:  { point: [18, 16], home: [26, 24] },
 };
 // minimums
 const MIN_DHAKA = { point: 100, home: 120 };
@@ -73,7 +72,7 @@ function CheckoutPage() {
   };
 
   const zoneLabel = (z: Zone) =>
-    z === "dhaka" ? "ঢাকা সিটি" : z === "district" ? "সারাদেশ (জেলা/সিটি)" : "সারাদেশ (উপজেলা)";
+    z === "dhaka" ? "ঢাকার ভেতর" : "ঢাকার বাহিরে";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,8 +133,8 @@ function CheckoutPage() {
           <Section step={2} title="ডেলিভারি অপশন">
             <div className="mb-4">
               <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">এলাকা নির্বাচন করুন</div>
-              <div className="grid gap-2 sm:grid-cols-3">
-                {(["dhaka", "district", "upazila"] as Zone[]).map((z) => (
+              <div className="grid gap-2 sm:grid-cols-2">
+                {(["dhaka", "outside"] as Zone[]).map((z) => (
                   <button key={z} type="button" onClick={() => setZone(z)}
                     className={`rounded-xl border-2 px-3 py-2.5 text-left text-sm transition ${zone === z ? "border-primary bg-primary/5 font-bold" : "border-border hover:border-primary/40"}`}>
                     <MapPin className="mb-1 inline h-3.5 w-3.5" /> {zoneLabel(z)}
