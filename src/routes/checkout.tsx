@@ -4,7 +4,7 @@ import { cart, useCart, useCartHydrated } from "@/lib/cart";
 import { bdt, toBn } from "@/lib/format";
 import { toast } from "sonner";
 import { Copy, Check, MapPin, Truck, Wallet } from "lucide-react";
-import bkashLogo from "@/assets/logo.png";
+import bkashLogo from "@/assets/bkash-logo.png";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({ meta: [{ title: "চেকআউট | Mangooz" }] }),
