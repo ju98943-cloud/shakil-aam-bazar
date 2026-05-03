@@ -174,9 +174,9 @@ function CheckoutPage() {
               <p className="text-sm text-muted-foreground">আগে ডেলিভারি অপশন নির্বাচন করুন।</p>
             ) : (
               <>
-                <div className="grid w-full max-w-[180px] gap-2">
-                  <div className="flex items-center justify-center gap-2 rounded-xl border-2 border-pink-500 bg-pink-50 px-4 py-3 text-pink-700 dark:bg-pink-950/30">
-                    <img src={bkashLogo} alt="bKash" className="h-6 w-6 object-contain" />
+                <div className="grid w-full max-w-[200px] gap-2">
+                  <div className="flex items-center gap-3 rounded-xl border-2 border-pink-500 bg-pink-50 px-4 py-2.5 text-pink-700 dark:bg-pink-950/30">
+                    <img src={bkashLogo} alt="bKash" className="h-10 w-10 rounded-md object-contain" />
                     <span className="font-bold text-sm">bKash</span>
                   </div>
                 </div>
