@@ -8,9 +8,9 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const items = [
-    { icon: Phone, t: "ফোন / কল", v: "০১৭০০-০০০০০০", href: "tel:01700000000" },
-    { icon: MessageCircle, t: "হোয়াটসঅ্যাপ", v: "০১৭০০-০০০০০০", href: "https://wa.me/8801700000000" },
-    { icon: Mail, t: "ইমেইল", v: "info@mangooz.com", href: "mailto:info@mangooz.com" },
+    { icon: Phone, t: "ফোন / কল", v: "01701808454", href: "tel:01701808454" },
+    { icon: MessageCircle, t: "হোয়াটসঅ্যাপ", v: "01350007575", href: "https://wa.me/8801350007575" },
+    { icon: Mail, t: "ইমেইল", v: "mangoozbd.shop@gmail.com", href: "mailto:mangoozbd.shop@gmail.com" },
     { icon: MapPin, t: "ঠিকানা", v: "রাজশাহী, বাংলাদেশ" },
   ];
   return (
