@@ -99,7 +99,7 @@ function CheckoutPage() {
       fd.append("subtotal", `৳${subtotal}`);
       fd.append("shipping", `৳${shipping}`);
       fd.append("total", `৳${total}`);
-      fd.append("payment_choice", pay === "full" ? "Full Amount via bKash" : "Delivery Charge Only via bKash");
+      fd.append("payment_choice", pay === "full" ? "Full Amount" : "50% Advance");
       fd.append("payment_method", method === "bkash" ? "bKash" : "Nagad");
       fd.append("paid_now", `৳${payNow}`);
       fd.append("remaining_cod", `৳${remaining}`);
@@ -215,7 +215,7 @@ function CheckoutPage() {
                       <Wallet className="h-4 w-4" /> Payment Instructions
                     </div>
                     <p className="mt-1.5 text-xs text-foreground/75">
-                      Send <span className="font-bold">{bdt(payNow)}</span> to the {method === "bkash" ? "bKash" : "Nagad"} number below from your own number, then enter the sender number and Transaction ID.
+                      Send <span className="font-bold">{bdt(payNow)}</span> to the {method === "bkash" ? "bKash" : "Nagad"} number below from your own number, then enter the sender number.
                     </p>
                     <div className="mt-3 space-y-2">
                       <CopyRow label="Send to" value={PAYMENT_NUMBER} copied={copied === "num"} onCopy={() => copyText(PAYMENT_NUMBER, "num")} />
@@ -224,7 +224,7 @@ function CheckoutPage() {
                     <label className="mt-4 block">
                       <span className={`mb-1.5 block text-sm font-semibold ${method === "bkash" ? "text-pink-600" : "text-orange-600"}`}>আপনার নাম্বার (যে নাম্বার থেকে পাঠিয়েছেন) *</span>
                       <input type="tel" value={form.trxid}
-                        onChange={(e) => setForm({ ...form, trxid: e.target.value.toUpperCase() })}
+                        onChange={(e) => setForm({ ...form, trxid: e.target.value })}
                         placeholder="01XXXXXXXXX"
                         className={`w-full rounded-xl border-2 bg-background px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none ${method === "bkash" ? "border-pink-200 focus:border-pink-500" : "border-orange-200 focus:border-orange-500"}`} />
                       <span className="mt-1 block text-[11px] text-muted-foreground">যে {method === "bkash" ? "bKash" : "Nagad"} নাম্বার থেকে টাকা পাঠিয়েছেন</span>
@@ -253,13 +253,13 @@ function CheckoutPage() {
           </div>
           {deliveryReady && (
             <div className="mt-3 space-y-1 rounded-xl bg-pink-50 p-3 text-xs dark:bg-pink-950/20">
-              <div className="flex justify-between"><span className="text-muted-foreground">এখন bKash এ</span><span className="font-bold text-pink-600">{bdt(payNow)}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">এখন {method === "bkash" ? "bKash" : "Nagad"} এ</span><span className={`font-bold ${method === "bkash" ? "text-pink-600" : "text-orange-600"}`}>{bdt(payNow)}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">ডেলিভারিতে দেয়</span><span className="font-semibold">{bdt(remaining)}</span></div>
             </div>
           )}
           <button type="submit" disabled={!canOrder || submitting}
             className="mt-5 w-full rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50">
-            {submitting ? "প্রসেস হচ্ছে..." : !deliveryReady ? "ডেলিভারি অপশন নির্বাচন করুন" : !trxFilled ? "TrxID দিন" : "অর্ডার নিশ্চিত করুন"}
+            {submitting ? "প্রসেস হচ্ছে..." : !deliveryReady ? "ডেলিভারি অপশন নির্বাচন করুন" : !trxFilled ? "আপনার নাম্বার দিন" : "অর্ডার নিশ্চিত করুন"}
           </button>
           {!canOrder && <p className="mt-2 text-center text-[11px] text-muted-foreground">সকল ধাপ পূরণ করার পর বাটন সক্রিয় হবে</p>}
         </div>
