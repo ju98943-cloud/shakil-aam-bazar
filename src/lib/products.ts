@@ -1,7 +1,7 @@
+import mangoAmrupali from "@/assets/mango-amrupali.jpg";
 import mangoHimsagar from "@/assets/mango-himsagar.jpg";
-import mangoLangra from "@/assets/mango-langra.jpg";
-import mangoAmrapali from "@/assets/mango-amrapali.jpg";
-import mangoFazli from "@/assets/mango-fazli.jpg";
+import mangoNakFazli from "@/assets/mango-nak-fazli.jpg";
+import mangoBanana from "@/assets/mango-banana.jpg";
 
 export type Product = {
   id: string;
@@ -23,7 +23,7 @@ export const products: Product[] = [
     description: "অসাধারণ মিষ্টি ও সুগন্ধি আম রুপালি — আঁশবিহীন, রসালো ও পুষ্টিকর। শীঘ্রই আসছে।",
     price: 0,
     original_price: null,
-    image_url: mangoAmrapali,
+    image_url: mangoAmrupali,
     weight: "১০ কেজি / ২০ কেজি বক্স",
     preorder: true,
   },
@@ -45,18 +45,18 @@ export const products: Product[] = [
     description: "ছোট নাকের মতো দেখতে — অপূর্ব স্বাদের নাক ফজলি আম। মৌসুমে পাওয়া যাবে।",
     price: 0,
     original_price: null,
-    image_url: mangoFazli,
+    image_url: mangoNakFazli,
     weight: "১০ কেজি / ২০ কেজি বক্স",
     preorder: true,
   },
   {
     id: "4",
-    slug: "nana-mango",
-    name: "নানা ম্যাংগো",
-    description: "বিশেষ জাতের নানা ম্যাংগো — মিষ্টি, রসালো ও সুগন্ধে ভরপুর।",
+    slug: "banana-mango",
+    name: "ব্যানানা ম্যাংগো",
+    description: "লম্বাটে আকৃতির বিশেষ জাতের ব্যানানা ম্যাংগো — মিষ্টি, রসালো ও সুগন্ধে ভরপুর।",
     price: 0,
     original_price: null,
-    image_url: mangoHimsagar,
+    image_url: mangoBanana,
     weight: "১০ কেজি / ২০ কেজি বক্স",
     preorder: true,
   },
@@ -67,7 +67,7 @@ export const products: Product[] = [
     description: "সর্বপ্রথম মৌসুমে আসা মিষ্টি গোপালভোগ আম — সুমিষ্ট স্বাদ ও অপূর্ব গন্ধ।",
     price: 0,
     original_price: null,
-    image_url: mangoAmrapali,
+    image_url: "",
     weight: "১০ কেজি / ২০ কেজি বক্স",
     preorder: true,
   },
@@ -78,7 +78,7 @@ export const products: Product[] = [
     description: "চাপাইনবাবগঞ্জের বিখ্যাত ল্যাংড়া আম — রসালো, মিষ্টি ও সুগন্ধযুক্ত।",
     price: 0,
     original_price: null,
-    image_url: mangoLangra,
+    image_url: "",
     weight: "১০ কেজি / ২০ কেজি বক্স",
     preorder: true,
   },
