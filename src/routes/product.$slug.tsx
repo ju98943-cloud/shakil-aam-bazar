@@ -40,7 +40,14 @@ function ProductDetail() {
       </Link>
       <div className="grid gap-10 md:grid-cols-2">
         <div className="overflow-hidden rounded-3xl bg-secondary shadow-[var(--shadow-soft)]">
-          {product.image_url && <img src={product.image_url} alt={product.name} className="aspect-square w-full object-cover" />}
+          {product.image_url ? (
+            <img src={product.image_url} alt={product.name} className="aspect-square w-full object-cover" />
+          ) : (
+            <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-secondary to-muted">
+              <span className="text-7xl">🥭</span>
+              <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">ছবি শীঘ্রই</span>
+            </div>
+          )}
         </div>
         <div>
           <h1 className="text-3xl font-bold text-foreground md:text-4xl">{product.name}</h1>
