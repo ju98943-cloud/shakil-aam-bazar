@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 
 export function Footer() {
@@ -30,8 +30,9 @@ export function Footer() {
         <div>
           <h4 className="mb-4 text-sm font-bold uppercase tracking-wider opacity-90">যোগাযোগ</h4>
           <ul className="space-y-3 text-sm opacity-80">
-            <li className="flex items-start gap-2"><Phone className="mt-0.5 h-4 w-4 flex-shrink-0" /><span>০১৭০০-০০০০০০</span></li>
-            <li className="flex items-start gap-2"><Mail className="mt-0.5 h-4 w-4 flex-shrink-0" /><span>info@mangooz.com</span></li>
+            <li className="flex items-start gap-2"><Phone className="mt-0.5 h-4 w-4 flex-shrink-0" /><a href="tel:01701808454" className="hover:text-accent">01701808454</a></li>
+            <li className="flex items-start gap-2"><MessageCircle className="mt-0.5 h-4 w-4 flex-shrink-0" /><a href="https://wa.me/8801350007575" target="_blank" rel="noopener noreferrer" className="hover:text-accent">WhatsApp: 01350007575</a></li>
+            <li className="flex items-start gap-2"><Mail className="mt-0.5 h-4 w-4 flex-shrink-0" /><a href="mailto:mangoozbd.shop@gmail.com" className="hover:text-accent break-all">mangoozbd.shop@gmail.com</a></li>
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" /><span>রাজশাহী, বাংলাদেশ</span></li>
           </ul>
         </div>

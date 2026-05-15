@@ -37,8 +37,8 @@ function HomePage() {
               <Link to="/shop" className="inline-flex items-center justify-center rounded-xl bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[var(--shadow-elevated)]">
                 এখনই অর্ডার করুন
               </Link>
-              <a href="tel:01700000000" className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-card px-7 py-3.5 text-sm font-semibold text-primary hover:bg-secondary">
-                <Phone className="h-4 w-4" /> ০১৭০০-০০০০০০
+              <a href="tel:01701808454" className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-card px-7 py-3.5 text-sm font-semibold text-primary hover:bg-secondary">
+                <Phone className="h-4 w-4" /> 01701808454
               </a>
             </div>
           </motion.div>

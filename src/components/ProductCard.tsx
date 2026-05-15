@@ -8,6 +8,10 @@ import type { Product } from "@/lib/products";
 export function ProductCard({ product }: { product: Product }) {
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (product.preorder) {
+      toast.info(`${product.name} — Pre order soon`);
+      return;
+    }
     const item: Omit<CartItem, "quantity"> = {
       id: product.id, name: product.name, price: product.price,
       image_url: product.image_url, weight: product.weight,
@@ -35,14 +39,20 @@ export function ProductCard({ product }: { product: Product }) {
           <h3 className="text-lg font-bold text-foreground">{product.name}</h3>
           {product.weight && <p className="mt-1 text-xs text-muted-foreground">{product.weight}</p>}
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-xl font-bold text-primary">{bdt(product.price)}</span>
-            {product.original_price && product.original_price > product.price && (
-              <span className="text-sm text-muted-foreground line-through">{bdt(product.original_price)}</span>
+            {product.preorder ? (
+              <span className="text-lg font-bold text-accent">Pre order soon</span>
+            ) : (
+              <>
+                <span className="text-xl font-bold text-primary">{bdt(product.price)}</span>
+                {product.original_price && product.original_price > product.price && (
+                  <span className="text-sm text-muted-foreground line-through">{bdt(product.original_price)}</span>
+                )}
+              </>
             )}
           </div>
-          <button onClick={handleAdd}
-            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
-            <ShoppingBag className="h-4 w-4" /> কার্টে যোগ করুন
+          <button onClick={handleAdd} disabled={product.preorder}
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60">
+            <ShoppingBag className="h-4 w-4" /> {product.preorder ? "Pre order soon" : "কার্টে যোগ করুন"}
           </button>
         </div>
       </div>

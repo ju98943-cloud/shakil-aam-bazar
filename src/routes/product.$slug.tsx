@@ -20,10 +20,18 @@ function ProductDetail() {
   if (!product) return <div className="mx-auto max-w-7xl px-4 py-20 text-center"><h1 className="text-2xl font-bold">পণ্য পাওয়া যায়নি</h1><Link to="/shop" className="mt-4 inline-block text-primary underline">শপে ফিরে যান</Link></div>;
 
   const handleAdd = () => {
+    if (product.preorder) {
+      toast.info(`${product.name} — Pre order soon`);
+      return;
+    }
     cart.add({ id: product.id, name: product.name, price: product.price, image_url: product.image_url, weight: product.weight }, qty);
     toast.success(`${toBn(qty)} টি ${product.name} কার্টে যোগ হয়েছে`);
   };
-  const handleBuy = () => { handleAdd(); navigate({ to: "/checkout" }); };
+  const handleBuy = () => {
+    if (product.preorder) { toast.info(`${product.name} — Pre order soon`); return; }
+    handleAdd();
+    navigate({ to: "/checkout" });
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 md:px-8">
@@ -38,9 +46,15 @@ function ProductDetail() {
           <h1 className="text-3xl font-bold text-foreground md:text-4xl">{product.name}</h1>
           {product.weight && <p className="mt-2 text-sm text-muted-foreground">প্যাকেজ: {product.weight}</p>}
           <div className="mt-5 flex items-baseline gap-3">
-            <span className="text-4xl font-bold text-primary">{bdt(product.price)}</span>
-            {product.original_price && product.original_price > product.price && (
-              <span className="text-lg text-muted-foreground line-through">{bdt(product.original_price)}</span>
+            {product.preorder ? (
+              <span className="text-3xl font-bold text-accent">Pre order soon</span>
+            ) : (
+              <>
+                <span className="text-4xl font-bold text-primary">{bdt(product.price)}</span>
+                {product.original_price && product.original_price > product.price && (
+                  <span className="text-lg text-muted-foreground line-through">{bdt(product.original_price)}</span>
+                )}
+              </>
             )}
           </div>
           <p className="mt-5 leading-relaxed text-foreground/80">{product.description}</p>
@@ -55,11 +69,11 @@ function ProductDetail() {
           </div>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <button onClick={handleAdd} className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-primary bg-card px-6 py-3.5 font-semibold text-primary hover:bg-primary/5">
-              <ShoppingBag className="h-4 w-4" /> কার্টে যোগ করুন
+            <button onClick={handleAdd} disabled={product.preorder} className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-primary bg-card px-6 py-3.5 font-semibold text-primary hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-60">
+              <ShoppingBag className="h-4 w-4" /> {product.preorder ? "Pre order soon" : "কার্টে যোগ করুন"}
             </button>
-            <button onClick={handleBuy} className="inline-flex flex-1 items-center justify-center rounded-xl bg-primary px-6 py-3.5 font-semibold text-primary-foreground hover:bg-primary/90">
-              এখনই কিনুন
+            <button onClick={handleBuy} disabled={product.preorder} className="inline-flex flex-1 items-center justify-center rounded-xl bg-primary px-6 py-3.5 font-semibold text-primary-foreground hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60">
+              {product.preorder ? "Pre order soon" : "এখনই কিনুন"}
             </button>
           </div>
 

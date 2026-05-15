@@ -5,19 +5,21 @@ import { bdt, toBn } from "@/lib/format";
 import { toast } from "sonner";
 import { Copy, Check, MapPin, Truck, Wallet } from "lucide-react";
 import bkashLogo from "@/assets/bkash-logo.png";
+import nagadLogo from "@/assets/nagad-logo.png";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({ meta: [{ title: "চেকআউট | Mangooz" }] }),
   component: CheckoutPage,
 });
 
-const BKASH_NUMBER = "01325444569";
+const PAYMENT_NUMBER = "01701808454";
 const WEB3FORMS_KEY = "0076fad7-789a-4476-b990-7a2cdef178dd";
-const KG_PER_BOX = 6;
+const KG_PER_BOX = 10;
 
 type Zone = "dhaka" | "outside";
 type DType = "point" | "home";
 type PayChoice = "delivery_only" | "full";
+type PayMethod = "bkash" | "nagad";
 
 // rate per kg: [under20, over20]
 const RATES: Record<Zone, Record<DType, [number, number]>> = {
@@ -47,6 +49,7 @@ function CheckoutPage() {
   const [zone, setZone] = useState<Zone | "">("");
   const [dtype, setDtype] = useState<DType | "">("");
   const [pay, setPay] = useState<PayChoice>("delivery_only");
+  const [method, setMethod] = useState<PayMethod>("bkash");
   const [copied, setCopied] = useState<string | null>(null);
 
   const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
@@ -96,11 +99,12 @@ function CheckoutPage() {
       fd.append("subtotal", `৳${subtotal}`);
       fd.append("shipping", `৳${shipping}`);
       fd.append("total", `৳${total}`);
-      fd.append("payment_choice", pay === "full" ? "Full Amount via bKash" : "Delivery Charge Only via bKash");
-      fd.append("paid_now_bkash", `৳${payNow}`);
+      fd.append("payment_choice", pay === "full" ? "Full Amount" : "50% Advance");
+      fd.append("payment_method", method === "bkash" ? "bKash" : "Nagad");
+      fd.append("paid_now", `৳${payNow}`);
       fd.append("remaining_cod", `৳${remaining}`);
-      fd.append("bkash_number", BKASH_NUMBER);
-      fd.append("bkash_trxid", form.trxid.trim());
+      fd.append("payment_number", PAYMENT_NUMBER);
+      fd.append("trxid", form.trxid.trim());
 
       const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: fd });
       const data = await res.json();
@@ -174,50 +178,56 @@ function CheckoutPage() {
               <p className="text-sm text-muted-foreground">আগে ডেলিভারি অপশন নির্বাচন করুন।</p>
             ) : (
               <>
-                <div className="grid w-full max-w-[200px] gap-2">
-                  <div className="flex items-center gap-3 rounded-xl border-2 border-pink-500 bg-pink-50 px-4 py-2.5 text-pink-700 dark:bg-pink-950/30">
+                <div className="grid grid-cols-2 gap-3 sm:max-w-md">
+                  <button type="button" onClick={() => setMethod("bkash")}
+                    className={`flex items-center gap-3 rounded-xl border-2 px-4 py-2.5 transition ${method === "bkash" ? "border-pink-500 bg-pink-50 text-pink-700 dark:bg-pink-950/30" : "border-border bg-card hover:border-pink-300"}`}>
                     <img src={bkashLogo} alt="bKash" className="h-10 w-10 rounded-md object-contain" />
                     <span className="font-bold text-sm">bKash</span>
-                  </div>
+                  </button>
+                  <button type="button" onClick={() => setMethod("nagad")}
+                    className={`flex items-center gap-3 rounded-xl border-2 px-4 py-2.5 transition ${method === "nagad" ? "border-orange-500 bg-orange-50 text-orange-700 dark:bg-orange-950/30" : "border-border bg-card hover:border-orange-300"}`}>
+                    <img src={nagadLogo} alt="Nagad" className="h-10 w-10 rounded-md object-contain" />
+                    <span className="font-bold text-sm">Nagad</span>
+                  </button>
                 </div>
 
-                <div className="mt-5 rounded-2xl border-2 border-pink-200 bg-pink-50/50 p-4 dark:border-pink-900/40 dark:bg-pink-950/10">
+                <div className={`mt-5 rounded-2xl border-2 p-4 ${method === "bkash" ? "border-pink-200 bg-pink-50/50 dark:border-pink-900/40 dark:bg-pink-950/10" : "border-orange-200 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/10"}`}>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-pink-600">bKash</span>
-                    <span className="text-sm font-mono text-foreground/70">{BKASH_NUMBER}</span>
+                    <span className={`font-bold ${method === "bkash" ? "text-pink-600" : "text-orange-600"}`}>{method === "bkash" ? "bKash" : "Nagad"}</span>
+                    <span className="text-sm font-mono text-foreground/70">{PAYMENT_NUMBER}</span>
                   </div>
                   <div className="mt-3 mb-2 text-sm font-semibold text-foreground">How much to pay now?</div>
                   <div className="grid grid-cols-2 gap-2">
                     <button type="button" onClick={() => setPay("delivery_only")}
-                      className={`rounded-xl px-3 py-3 text-center transition ${pay === "delivery_only" ? "bg-pink-600 text-white" : "border-2 border-border bg-card text-foreground"}`}>
-                      <div className="text-xs font-semibold opacity-90">Delivery Charge Only</div>
+                      className={`rounded-xl px-3 py-3 text-center transition ${pay === "delivery_only" ? (method === "bkash" ? "bg-pink-600 text-white" : "bg-orange-600 text-white") : "border-2 border-border bg-card text-foreground"}`}>
+                      <div className="text-xs font-semibold opacity-90">50% Advance</div>
                       <div className="mt-0.5 font-bold">{bdt(shipping)}</div>
                     </button>
                     <button type="button" onClick={() => setPay("full")}
-                      className={`rounded-xl px-3 py-3 text-center transition ${pay === "full" ? "bg-pink-600 text-white" : "border-2 border-border bg-card text-foreground"}`}>
+                      className={`rounded-xl px-3 py-3 text-center transition ${pay === "full" ? (method === "bkash" ? "bg-pink-600 text-white" : "bg-orange-600 text-white") : "border-2 border-border bg-card text-foreground"}`}>
                       <div className="text-xs font-semibold opacity-90">Full Amount</div>
                       <div className="mt-0.5 font-bold">{bdt(total)}</div>
                     </button>
                   </div>
 
-                  <div className="mt-4 rounded-xl border border-pink-300/60 bg-card p-4">
-                    <div className="flex items-center gap-2 text-pink-600 font-bold text-sm">
+                  <div className={`mt-4 rounded-xl border bg-card p-4 ${method === "bkash" ? "border-pink-300/60" : "border-orange-300/60"}`}>
+                    <div className={`flex items-center gap-2 font-bold text-sm ${method === "bkash" ? "text-pink-600" : "text-orange-600"}`}>
                       <Wallet className="h-4 w-4" /> Payment Instructions
                     </div>
                     <p className="mt-1.5 text-xs text-foreground/75">
-                      Send <span className="font-bold">{bdt(payNow)}</span> to the bKash number below, then enter your Transaction ID (TrxID).
+                      Send <span className="font-bold">{bdt(payNow)}</span> to the {method === "bkash" ? "bKash" : "Nagad"} number below from your own number, then enter the sender number.
                     </p>
                     <div className="mt-3 space-y-2">
-                      <CopyRow label="Send to" value={BKASH_NUMBER} copied={copied === "num"} onCopy={() => copyText(BKASH_NUMBER, "num")} />
+                      <CopyRow label="Send to" value={PAYMENT_NUMBER} copied={copied === "num"} onCopy={() => copyText(PAYMENT_NUMBER, "num")} />
                       <CopyRow label="Amount" value={`৳${toBn(payNow)}`} copied={copied === "amt"} onCopy={() => copyText(String(payNow), "amt")} />
                     </div>
                     <label className="mt-4 block">
-                      <span className="mb-1.5 block text-sm font-semibold text-pink-600">Transaction ID / TrxID *</span>
-                      <input type="text" value={form.trxid}
-                        onChange={(e) => setForm({ ...form, trxid: e.target.value.toUpperCase() })}
-                        placeholder="ENTER YOUR BKASH TRANSACTION ID"
-                        className="w-full rounded-xl border-2 border-pink-200 bg-background px-4 py-2.5 text-sm font-mono tracking-wider focus:border-pink-500 focus:outline-none" />
-                      <span className="mt-1 block text-[11px] text-muted-foreground">e.g. 8N7A5BC2DE</span>
+                      <span className={`mb-1.5 block text-sm font-semibold ${method === "bkash" ? "text-pink-600" : "text-orange-600"}`}>আপনার নাম্বার (যে নাম্বার থেকে পাঠিয়েছেন) *</span>
+                      <input type="tel" value={form.trxid}
+                        onChange={(e) => setForm({ ...form, trxid: e.target.value })}
+                        placeholder="01XXXXXXXXX"
+                        className={`w-full rounded-xl border-2 bg-background px-4 py-2.5 text-sm font-mono tracking-wider focus:outline-none ${method === "bkash" ? "border-pink-200 focus:border-pink-500" : "border-orange-200 focus:border-orange-500"}`} />
+                      <span className="mt-1 block text-[11px] text-muted-foreground">যে {method === "bkash" ? "bKash" : "Nagad"} নাম্বার থেকে টাকা পাঠিয়েছেন</span>
                     </label>
                   </div>
                 </div>
@@ -243,13 +253,13 @@ function CheckoutPage() {
           </div>
           {deliveryReady && (
             <div className="mt-3 space-y-1 rounded-xl bg-pink-50 p-3 text-xs dark:bg-pink-950/20">
-              <div className="flex justify-between"><span className="text-muted-foreground">এখন bKash এ</span><span className="font-bold text-pink-600">{bdt(payNow)}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">এখন {method === "bkash" ? "bKash" : "Nagad"} এ</span><span className={`font-bold ${method === "bkash" ? "text-pink-600" : "text-orange-600"}`}>{bdt(payNow)}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">ডেলিভারিতে দেয়</span><span className="font-semibold">{bdt(remaining)}</span></div>
             </div>
           )}
           <button type="submit" disabled={!canOrder || submitting}
             className="mt-5 w-full rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50">
-            {submitting ? "প্রসেস হচ্ছে..." : !deliveryReady ? "ডেলিভারি অপশন নির্বাচন করুন" : !trxFilled ? "TrxID দিন" : "অর্ডার নিশ্চিত করুন"}
+            {submitting ? "প্রসেস হচ্ছে..." : !deliveryReady ? "ডেলিভারি অপশন নির্বাচন করুন" : !trxFilled ? "আপনার নাম্বার দিন" : "অর্ডার নিশ্চিত করুন"}
           </button>
           {!canOrder && <p className="mt-2 text-center text-[11px] text-muted-foreground">সকল ধাপ পূরণ করার পর বাটন সক্রিয় হবে</p>}
         </div>
