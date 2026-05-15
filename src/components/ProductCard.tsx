@@ -32,8 +32,15 @@ export function ProductCard({ product }: { product: Product }) {
               -{discount}%
             </div>
           )}
-          <img src={product.image_url} alt={product.name} loading="lazy" width={800} height={800}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+          {product.image_url ? (
+            <img src={product.image_url} alt={product.name} loading="lazy" width={800} height={800}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-secondary to-muted text-center px-4">
+              <span className="text-5xl">🥭</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">ছবি শীঘ্রই</span>
+            </div>
+          )}
         </div>
         <div className="p-5">
           <h3 className="text-lg font-bold text-foreground">{product.name}</h3>
